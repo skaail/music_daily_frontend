@@ -13,7 +13,9 @@ interface Album {
     banda: string
     capa: string
     link: string
+    update: any
     nota?: number
+
 }
 
 function AlbumCard(props: Album) {
@@ -40,6 +42,8 @@ function AlbumCard(props: Album) {
         }
     
         let response = await axios.request(reqOptions)
+        setDialog(!dialog)
+        props.update()
       }
 
       const handleChange = (event: any) => {
