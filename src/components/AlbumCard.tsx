@@ -78,7 +78,10 @@ function AlbumCard(props: Album) {
                 <ContextMenuContent>
                     <ContextMenuItem>Atualizar</ContextMenuItem>
                     <ContextMenuItem>Apagar</ContextMenuItem>
-                    <ContextMenuItem onClick={() => setDialog(!dialog)}>Dar Nota</ContextMenuItem>
+                    {
+                        (!props.nota) &&             
+                        <ContextMenuItem onClick={() => setDialog(!dialog)}>Dar Nota</ContextMenuItem>
+                    }
                 </ContextMenuContent>
             </ContextMenu>
 
