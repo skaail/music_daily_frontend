@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    color: white;
+}
 
 .main{
     background-color: #0f1012;
