@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import axios from "axios"
 
 interface Album {
+  id: number
   nome: string
   banda: string
   capa: string
@@ -19,6 +20,8 @@ interface Album {
 export default function Home() {
   const [albums, setAlbum] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const [open, setOpen] = useState(false)
 
   const [nome, setNome] = useState('')
   const [banda, setBanda] = useState('')
@@ -64,6 +67,8 @@ export default function Home() {
     }
 
     let response = await axios.request(reqOptions)
+    getAlbums()
+    setOpen(!open)
   }
 
   useEffect(() => {
@@ -84,8 +89,8 @@ export default function Home() {
     return (
       <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4 pb-[400px]"  >
         <div className="w-full flex flex-row-reverse pr-10">
-          <Dialog>
-            <DialogTrigger>Adicionar</DialogTrigger>
+          <Dialog open={open}>
+            <Button onClick={() => setOpen(!open)}>Adicionar</Button>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Adicionar um Album</DialogTitle>
@@ -103,7 +108,7 @@ export default function Home() {
         
   
         {albums.map((album: Album, i) => (
-                <AlbumCard key={i} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
+                <AlbumCard key={i} id={album.id} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
         ))}
       </div>
     )
