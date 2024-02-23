@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import axios from "axios"
 
 interface Album {
-    id: number
+    id?: number
     nome: string
     banda: string
     capa: string
@@ -24,7 +24,7 @@ function AlbumCard(props: Album) {
     const [nota, setNota] = useState()
 
 
-    async function darNota(id: number, nota?: number) {
+    async function darNota(id?: number, nota?: number) {
 
         let headersList = {
           'Content-Type': 'application/json',

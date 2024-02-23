@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import axios from "axios"
 
 interface Album {
-  id: number
+  id?: number
   nome: string
   banda: string
   capa: string
