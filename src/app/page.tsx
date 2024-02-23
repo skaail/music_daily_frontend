@@ -15,6 +15,7 @@ interface Album {
   capa: string
   link: string
   nota?: number
+  update: any
 }
 
 export default function Home() {
@@ -108,7 +109,7 @@ export default function Home() {
         
   
         {albums.map((album: Album, i) => (
-                <AlbumCard update={getAlbums} key={i} id={album.id} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
+                <AlbumCard update={() => {getAlbums}} key={i} id={album.id} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
         ))}
       </div>
     )
