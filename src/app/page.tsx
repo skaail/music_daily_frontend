@@ -57,7 +57,7 @@ export default function Home() {
     })
 
     let reqOptions = {
-      url: "http://localhost:4000/album",
+      url: "https://typescript-daily-songs.onrender.com/album",
       method: "POST",
       headers: headersList,
       data: bodyContent,
