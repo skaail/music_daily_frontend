@@ -54,7 +54,7 @@ function AlbumCard(props: Album) {
         <div className="relative w-48 cursor-pointer overflow-hidden" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <ContextMenu>
                 <ContextMenuTrigger>
-                <a href={props.link}>
+                <a href={props.link} target="_blank" rel="noopener noreferrer">
                 <img src={props.capa} />
 
                 {
