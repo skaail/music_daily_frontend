@@ -6,6 +6,7 @@ interface Album {
   nome: string
   banda: string
   capa: string
+  link: string
   nota?: number
 }
 
@@ -21,7 +22,7 @@ export default function Home() {
   };
 
   async function getAlbums(){
-    const res = await fetch("https://typescript-daily-songs.onrender.com/album")
+    const res = await fetch("http://localhost:4000/album")
     const albums = await res.json()
 
     setAlbum(albums)
@@ -46,7 +47,7 @@ export default function Home() {
   return (
     <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4 pb-[400px]"  >
       {albums.map((album: Album, i) => (
-              <AlbumCard nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa}/>
+              <AlbumCard nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
       ))}
     </div>
   );
