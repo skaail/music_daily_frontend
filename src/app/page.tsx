@@ -15,6 +15,7 @@ interface Album {
   capa: string
   link: string
   nota?: number
+  update: any
 }
 
 export default function Home() {
