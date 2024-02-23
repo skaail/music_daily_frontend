@@ -1,6 +1,12 @@
 "use client"
-import AlbumCard from "@/components/AlbumCard";
-import { useEffect, useState } from "react";
+import AlbumCard from "@/components/AlbumCard"
+import { useEffect, useState } from "react"
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import axios from "axios"
 
 interface Album {
   nome: string
@@ -14,18 +20,50 @@ export default function Home() {
   const [albums, setAlbum] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
+  const [nome, setNome] = useState('')
+  const [banda, setBanda] = useState('')
+
   const handleFetch = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     getAlbums().then((r) => {
-      setIsLoading(false);
-    });
-  };
+      setIsLoading(false)
+    })
+  }
 
   async function getAlbums(){
-    const res = await fetch("http://localhost:4000/album")
+    const res = await fetch("https://typescript-daily-songs.onrender.com/album/recomendacao")
     const albums = await res.json()
 
     setAlbum(albums)
+  }
+
+  const changeNome = (event: any) => {
+    setNome(event.target.value)
+  }
+
+  const changeBanda = (event: any) => {
+    setBanda(event.target.value)
+  }
+
+  async function addAlbum(nome: string, banda: string) {
+
+    let headersList = {
+      'Content-Type': 'application/json',
+    }
+
+    let bodyContent = JSON.stringify({
+      "nome": nome,
+      "banda": banda
+    })
+
+    let reqOptions = {
+      url: "http://localhost:4000/album",
+      method: "POST",
+      headers: headersList,
+      data: bodyContent,
+    }
+
+    let response = await axios.request(reqOptions)
   }
 
   useEffect(() => {
@@ -42,13 +80,32 @@ export default function Home() {
         <span className="">Carregando Albums...</span>
       </div>
     )
+  }else{
+    return (
+      <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4 pb-[400px]"  >
+        <div className="w-full flex flex-row-reverse pr-10">
+          <Dialog>
+            <DialogTrigger>Adicionar</DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Adicionar um Album</DialogTitle>
+              </DialogHeader>
+                <Label htmlFor="nome">Nome</Label>
+                <Input id="nome" type="text" placeholder="Ants From Up There" onChange={changeNome} />
+  
+                <Label htmlFor="banda">Banda</Label>
+                <Input id="banda" type="text" placeholder="Black Country New Road" onChange={changeBanda}/>
+  
+                <Button onClick={() => {addAlbum(nome, banda)}}>Adicionar</Button>
+            </DialogContent>
+          </Dialog>
+        </div>
+        
+  
+        {albums.map((album: Album, i) => (
+                <AlbumCard key={i} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
+        ))}
+      </div>
+    )
   }
-
-  return (
-    <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4 pb-[400px]"  >
-      {albums.map((album: Album, i) => (
-              <AlbumCard nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
-      ))}
-    </div>
-  );
 }

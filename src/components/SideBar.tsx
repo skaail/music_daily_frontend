@@ -4,7 +4,6 @@ import { HiHome, HiChartBar, HiOutlineSearch, HiAdjustments, HiChevronDoubleLeft
 
 const menu_items = [
     {nome: "Home", link: "/", icon: <HiHome />},
-    {nome: "Pesquisar", link: "/pesquisar", icon: <HiOutlineSearch />},
     {nome: "Ranking", link: "/ranking", icon: <HiChartBar />},
     {nome: "Música Aleatória", link: "/random", icon: <HiAdjustments />}
 ]
@@ -13,7 +12,7 @@ function SideBar() {
     const [open, setOpen] = useState(false)
 
     return (
-        <aside className={`flex flex-col transition-all ${open ? 'w-24' : 'w-64'}  h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700`}>
+        <aside className={`flex flex-col transition-all ${open ? 'w-24' : 'w-64'}  h-screen px-4 py-8 overflow-y-auto border-r rtl:border-r-0 rtl:border-l bg-gray-900 border-gray-700`}>
             <div className='flex items-center justify-between'>
                 <a href="#">
                     <h1 className={`${open ? 'opacity-0' : 'opacity-100'}`}>Daily Songs</h1>
