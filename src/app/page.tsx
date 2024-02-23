@@ -44,7 +44,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4">
+    <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4 pb-[400px]"  >
       {albums.map((album: Album, i) => (
               <AlbumCard nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa}/>
       ))}
