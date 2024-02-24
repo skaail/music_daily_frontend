@@ -33,7 +33,7 @@ function AlbumCard(props: Album) {
           }
       
           let reqOptions = {
-            url: "http://localhost:4000/album/"+ id,
+            url: "https://typescript-daily-songs.onrender.com/album/"+ id,
             method: "DELETE",
             headers: headersList,
           }
