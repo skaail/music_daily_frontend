@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 interface Album {
   id?: number
@@ -23,6 +24,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
 
   const [open, setOpen] = useState(false)
+
+  const [saving, setSaving] = useState(false)
 
   const [nome, setNome] = useState('')
   const [banda, setBanda] = useState('')
@@ -52,6 +55,8 @@ export default function Home() {
 
   async function addAlbum(nome: string, banda: string) {
 
+    setSaving(true)
+
     let headersList = {
       'Content-Type': 'application/json',
     }
@@ -69,6 +74,7 @@ export default function Home() {
     }
 
     let response = await axios.request(reqOptions)
+    setSaving(false)
     getAlbums()
     setOpen(!open)
   }
@@ -103,7 +109,13 @@ export default function Home() {
                 <Label htmlFor="banda">Banda</Label>
                 <Input id="banda" type="text" placeholder="Black Country New Road" onChange={changeBanda}/>
   
-                <Button onClick={() => {addAlbum(nome, banda)}}>Adicionar</Button>
+                <Button disabled={saving} onClick={() => {addAlbum(nome, banda)}}>
+                {
+                  (saving) &&
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                }
+                Adicionar
+                </Button>
             </DialogContent>
           </Dialog>
         </div>
