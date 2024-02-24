@@ -2,7 +2,7 @@
 import AlbumCard from "@/components/AlbumCard"
 import { useEffect, useState } from "react"
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -100,14 +100,14 @@ export default function Home() {
           <Dialog open={open}>
             <Button onClick={() => setOpen(!open)}>Adicionar</Button>
             <DialogContent>
-              <DialogHeader>
+              <DialogHeader >
                 <DialogTitle>Adicionar um Album</DialogTitle>
               </DialogHeader>
                 <Label htmlFor="nome">Nome</Label>
                 <Input id="nome" type="text" placeholder="Ants From Up There" onChange={changeNome} />
   
                 <Label htmlFor="banda">Banda</Label>
-                <Input id="banda" type="text" placeholder="Black Country New Road" onChange={changeBanda}/>
+                <Input className="mb-5" id="banda" type="text" placeholder="Black Country New Road" onChange={changeBanda}/>
   
                 <Button disabled={saving} onClick={() => {addAlbum(nome, banda)}}>
                 {
@@ -116,6 +116,8 @@ export default function Home() {
                 }
                 Adicionar
                 </Button>
+
+                <Button onClick={() => setOpen(!open)}>Cancelar</Button>
             </DialogContent>
           </Dialog>
         </div>
