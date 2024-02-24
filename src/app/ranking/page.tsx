@@ -3,11 +3,13 @@ import AlbumCard from "@/components/AlbumCard";
 import { useEffect, useState } from "react";  
 
 interface Album {
+  id?: number
   nome: string
   banda: string
   capa: string
   link: string
   nota?: number
+  update?: () => void
 }
 
 export default function Ranking() {
@@ -48,7 +50,7 @@ export default function Ranking() {
     <div className="flex items-center justify-center max-h-screen flex-wrap overflow-auto gap-5 pt-4 pb-[400px]"  >
 
       {albums.map((album: Album, i) => (
-              <AlbumCard key={i} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
+              <AlbumCard key={i} update={() => {getAlbums()}} id={album.id} nota={album.nota} nome={album.nome} banda={album.banda} capa={album.capa} link={album.link}/>
       ))}
     </div>
   );

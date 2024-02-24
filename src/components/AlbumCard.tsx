@@ -26,6 +26,25 @@ function AlbumCard(props: Album) {
 
     const [saving, setSaving] = useState(false)
 
+    async function deleteAlbum(id?: number){
+        
+        let headersList = {
+            'Content-Type': 'application/json',
+          }
+      
+          let reqOptions = {
+            url: "http://localhost:4000/album/"+ id,
+            method: "DELETE",
+            headers: headersList,
+          }
+      
+          let response = await axios.request(reqOptions)
+
+          if(props.update) {
+            props.update()
+        }
+    }
+
 
     async function darNota(id?: number, nota?: number) {
 
@@ -88,7 +107,7 @@ function AlbumCard(props: Album) {
                 </ContextMenuTrigger>
                 <ContextMenuContent>
                     <ContextMenuItem>Atualizar</ContextMenuItem>
-                    <ContextMenuItem>Apagar</ContextMenuItem>
+                    <ContextMenuItem onClick={() => deleteAlbum(props.id)}>Apagar</ContextMenuItem>
                     {
                         (!props.nota) &&             
                         <ContextMenuItem onClick={() => setDialog(!dialog)}>Dar Nota</ContextMenuItem>
