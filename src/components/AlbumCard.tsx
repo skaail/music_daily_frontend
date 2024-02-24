@@ -6,6 +6,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Input } from "@/components/ui/input"
 
 import axios from "axios"
+import { ReloadIcon } from '@radix-ui/react-icons'
 
 interface Album {
     id?: number
@@ -23,8 +24,12 @@ function AlbumCard(props: Album) {
     const [dialog, setDialog] = useState(false)
     const [nota, setNota] = useState()
 
+    const [saving, setSaving] = useState(false)
+
 
     async function darNota(id?: number, nota?: number) {
+
+        setSaving(true)
 
         let headersList = {
           'Content-Type': 'application/json',
@@ -46,6 +51,7 @@ function AlbumCard(props: Album) {
         if(props.update) {
             props.update()
         }
+        setSaving(false)
         setDialog(!dialog)
         
       }
@@ -100,7 +106,13 @@ function AlbumCard(props: Album) {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel onClick={() => setDialog(!dialog)}>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => darNota(props.id, nota)}>Dar Nota</AlertDialogAction>
+                        <AlertDialogAction disabled={saving} onClick={() => darNota(props.id, nota)}>
+                            {
+                                (saving) &&
+                                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                            }
+                            Dar Nota
+                        </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
