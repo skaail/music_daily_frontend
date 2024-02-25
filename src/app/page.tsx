@@ -38,7 +38,8 @@ export default function Home() {
   }
 
   async function getAlbums(){
-    const res = await fetch("https://typescript-daily-songs.onrender.com/album/recomendacao")
+    const host = process.env.API_HOST
+    const res = await fetch(host + "/album/recomendacao")
     const albums = await res.json()
 
     setAlbum(albums)
@@ -55,6 +56,8 @@ export default function Home() {
 
   async function addAlbum(nome: string, banda: string) {
 
+    const host = process.env.API_HOST
+
     setSaving(true)
 
     let headersList = {
@@ -67,7 +70,7 @@ export default function Home() {
     })
 
     let reqOptions = {
-      url: "https://typescript-daily-songs.onrender.com/album",
+      url: host + "/album",
       method: "POST",
       headers: headersList,
       data: bodyContent,

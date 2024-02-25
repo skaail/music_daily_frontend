@@ -27,13 +27,14 @@ function AlbumCard(props: Album) {
     const [saving, setSaving] = useState(false)
 
     async function deleteAlbum(id?: number){
+        const host = process.env.API_HOST
         
         let headersList = {
             'Content-Type': 'application/json',
           }
       
           let reqOptions = {
-            url: "https://typescript-daily-songs.onrender.com/album/"+ id,
+            url: host + "/album/"+ id,
             method: "DELETE",
             headers: headersList,
           }
@@ -47,6 +48,7 @@ function AlbumCard(props: Album) {
 
 
     async function darNota(id?: number, nota?: number) {
+        const host = process.env.API_HOST
 
         setSaving(true)
 
@@ -59,7 +61,7 @@ function AlbumCard(props: Album) {
         })
     
         let reqOptions = {
-          url: "https://typescript-daily-songs.onrender.com/album/"+ id,
+          url: host + "/album/"+ id,
           method: "PUT",
           headers: headersList,
           data: bodyContent,

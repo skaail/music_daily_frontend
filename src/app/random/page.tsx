@@ -14,7 +14,8 @@ function Random() {
   const [album, setAlbum] = useState<Album>()
 
   async function getAlbum(){
-    const res = await fetch("https://typescript-daily-songs.onrender.com/album/aleatorio");
+    const host = process.env.API_HOST
+    const res = await fetch(host + "/album/aleatorio");
     const albumsData = await res.json();
     setAlbum(albumsData);
   }
