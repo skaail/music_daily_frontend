@@ -21,6 +21,7 @@ interface Album {
 
 export default function Home() {
   const [albums, setAlbum] = useState([])
+  const [capa, setCapa] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const [open, setOpen] = useState(false)
@@ -37,6 +38,30 @@ export default function Home() {
     })
   }
 
+  async function getCapa(nome: string, banda: string) {
+    const host = process.env.API_HOST
+
+    let headersList = {
+      'Content-Type': 'application/json',
+    }
+
+    let bodyContent = JSON.stringify({
+      "nome": nome,
+      "banda": banda
+    })
+
+    let reqOptions = {
+      url: host + "/capa",
+      method: "POST",
+      headers: headersList,
+      data: bodyContent,
+    }
+
+    let response = await axios.request(reqOptions)
+    setCapa(response.data as unknown as string)
+    console.log(response)
+  }
+
   async function getAlbums(){
     const host = process.env.API_HOST
     const res = await fetch(host + "/album/recomendacao")
@@ -48,10 +73,17 @@ export default function Home() {
 
   const changeNome = (event: any) => {
     setNome(event.target.value)
+    if(banda){
+      getCapa(nome, banda)
+    }
   }
 
   const changeBanda = (event: any) => {
     setBanda(event.target.value)
+
+    if(nome){
+      getCapa(nome, banda)
+    }
   }
 
   async function addAlbum(nome: string, banda: string) {
@@ -79,6 +111,7 @@ export default function Home() {
     let response = await axios.request(reqOptions)
     setSaving(false)
     getAlbums()
+    setCapa('')
     setOpen(!open)
   }
 
@@ -102,15 +135,30 @@ export default function Home() {
         <div className="w-full flex flex-row-reverse pr-10">
           <Dialog open={open}>
             <Button onClick={() => setOpen(!open)}>Adicionar</Button>
-            <DialogContent>
-              <DialogHeader >
+            <DialogContent style={{maxWidth: "800px"}}>
+              <DialogHeader>
                 <DialogTitle>Adicionar um Album</DialogTitle>
               </DialogHeader>
-                <Label htmlFor="nome">Nome</Label>
-                <Input id="nome" type="text" placeholder="Ants From Up There" onChange={changeNome} />
-  
-                <Label htmlFor="banda">Banda</Label>
-                <Input className="mb-5" id="banda" type="text" placeholder="Black Country New Road" onChange={changeBanda}/>
+                <div className="flex">
+                  <div>
+                  <img className="w-[300px]" src={capa || "https://i.pinimg.com/736x/8c/8e/97/8c8e97774e8738e5500dd03c74370039.jpg"}></img>
+                  </div>
+                  <div className="flex flex-col w-full p-5">
+
+                  <div>
+                  <Label htmlFor="nome">Nome</Label>
+                  <Input className="" id="nome" type="text" placeholder="Ants From Up There" onChange={changeNome} />
+
+                  </div>
+      
+                  <div>
+                  <Label htmlFor="banda">Banda</Label>
+                  <Input className="mb-5" id="banda" type="text" placeholder="Black Country New Road" onChange={changeBanda}/>
+                  </div>
+                  
+                  </div>
+
+                </div>
   
                 <Button disabled={saving} onClick={() => {addAlbum(nome, banda)}}>
                 {
@@ -120,7 +168,7 @@ export default function Home() {
                 Adicionar
                 </Button>
 
-                <Button onClick={() => setOpen(!open)}>Cancelar</Button>
+                <Button onClick={() => {setOpen(!open); setCapa('')}}>Cancelar</Button>
             </DialogContent>
           </Dialog>
         </div>
